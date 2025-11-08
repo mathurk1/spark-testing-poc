@@ -26,9 +26,6 @@ def spark():
 def test_format_df_adds_new_col(spark):
     # Create test DataFrame
 
-    create_initial_delta_table(spark, ".")
-
-
     schema = StructType([
         StructField("id", IntegerType(), True),
         StructField("name", StringType(), True)
@@ -44,3 +41,7 @@ def test_format_df_adds_new_col(spark):
     
     # Use pyspark.testing.assertDataFrameEqual for comparison
     assertDataFrameEqual(result_df, expected_df)
+
+def test_spark_delta(spark):
+    import os
+    create_initial_delta_table(spark, os.getcwd())
