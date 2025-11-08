@@ -11,7 +11,6 @@ def create_initial_delta_table(spark: SparkSession, table_path: str) -> None:
         StructField("value", IntegerType(), True)
     ])
     
-    table_path = table_path+"test_file.delta"
     initial_data = [(1, "Alice", 100), (2, "Bob", 200), (3, "Charlie", 300)]
     initial_df = spark.createDataFrame(initial_data, schema)
     print(f"saving df to path {table_path}")
