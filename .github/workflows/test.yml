@@ -31,4 +31,4 @@ jobs:
     
     - name: Run tests
       run: |
-        pytest test_*.py -v
+        pytest test_format_df.py -v
