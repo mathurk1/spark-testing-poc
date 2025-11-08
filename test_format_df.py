@@ -9,7 +9,11 @@ from try_delta_merge import create_initial_delta_table, perform_delta_merge
 
 @pytest.fixture(scope="session")
 def spark():
-    return SparkSession.builder.appName("test").getOrCreate()
+    return SparkSession.builder \
+        .appName("test") \
+        .config("spark.sql.extensions", "io.delta.sql.DeltaSparkSessionExtension") \
+        .config("spark.sql.catalog.spark_catalog", "org.apache.spark.sql.delta.catalog.DeltaCatalog") \
+        .getOrCreate()
 
 
 def test_format_df_adds_new_col(spark):
