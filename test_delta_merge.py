@@ -10,9 +10,17 @@ from try_delta_merge import create_initial_delta_table, perform_delta_merge
 @pytest.fixture(scope="session")
 def spark():
     from delta import configure_spark_with_delta_pip
-    builder = SparkSession.builder.appName("test_delta_merge")
-    spark = configure_spark_with_delta_pip(builder).getOrCreate()
-    return spark
+    
+    # Initialize the SparkSession builder
+    builder = (
+        SparkSession.builder
+        .appName("test_delta_merge")
+        .config("spark.sql.extensions", "io.delta.sql.DeltaSparkSessionExtension")
+        .config("spark.sql.catalog.spark_catalog", "org.apache.spark.sql.delta.catalog.DeltaCatalog")
+    )
+    
+    # Configure the builder with Delta Lake support using the utility function
+    return configure_spark_with_delta_pip(builder).getOrCreate()
 
 
 @pytest.fixture
